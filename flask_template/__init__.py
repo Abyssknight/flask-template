@@ -1,9 +1,12 @@
+import logging
 import os
+from logging.handlers import RotatingFileHandler
 
 from flask import Flask
+from flask.logging import default_handler
 
 from flask_template.extensions import db, migrate, redis
-from flask_template.settings import config
+from flask_template.settings import basedir, config
 
 
 def create_app(config_name=None):
@@ -15,10 +18,26 @@ def create_app(config_name=None):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
 
+    register_logger(app)
     register_blueprints(app)
     register_extensions(app)
 
     return app
+
+
+def register_logger(app):
+    """注册日志"""
+    app.logger.removeHandler(default_handler)
+
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    file_handler = RotatingFileHandler(os.path.join(basedir, 'logs/flask_template.log'),
+                                       maxBytes=10 * 1024 * 1024,
+                                       backupCount=10)
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(logging.INFO)
+
+    if not app.debug:
+        app.logger.addHandler(file_handler)
 
 
 def register_blueprints(app):
