@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - '5000:5000'
+    expose:
+      - '5000'
+    command: gunicorn -c gunicorn.py wsgi:app

@@ -17,6 +17,3 @@ COPY --from=build /usr/local/bin/gunicorn /usr/local/bin/gunicorn
 # 切换工作路径
 WORKDIR /app
 COPY . /app
-
-EXPOSE 5000
-CMD gunicorn -c gunicorn.py wsgi:app
