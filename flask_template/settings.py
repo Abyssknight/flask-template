@@ -25,6 +25,9 @@ class TestingConfig(BaseConfig):
 
     TESTING = True
 
+    # SQLAlchemy
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'data-test.db'))
+
 
 class DevelopmentConfig(BaseConfig):
     """开发环境"""
