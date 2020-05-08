@@ -7,7 +7,7 @@ from flask import Flask
 from flask.logging import default_handler
 
 from flask_template.extensions import db, migrate, redis
-from flask_template.settings import basedir, config
+from flask_template.configs import basedir, config
 
 
 def create_app(config_name=None):
