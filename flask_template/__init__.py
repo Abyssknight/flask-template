@@ -2,6 +2,7 @@ import logging
 import os
 from logging.handlers import RotatingFileHandler
 
+import click
 from flask import Flask
 from flask.logging import default_handler
 
@@ -21,6 +22,8 @@ def create_app(config_name=None):
     register_logger(app)
     register_blueprints(app)
     register_extensions(app)
+    register_commands(app)
+    register_shell_context(app)
 
     return app
 
@@ -53,3 +56,29 @@ def register_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db=db)
     redis.init_app(app)
+
+
+def register_commands(app):
+    """注册命令"""
+
+    @app.cli.command()
+    @click.option('--drop', is_flag=True, help='Create after drop.')
+    def initdb(drop):
+        """初始化数据库"""
+        from flask_template.models import MyDB
+
+        if drop:
+            click.confirm('This operation will delete the database, do you want to continue?', abort=True)
+            db.drop_all()
+            click.echo('Drop tables.')
+
+        db.create_all()
+        click.echo('Initialized database.')
+
+
+def register_shell_context(app):
+    """注册 shell 上下文"""
+
+    @app.shell_context_processor
+    def make_shell_context():
+        return dict(db=db)
