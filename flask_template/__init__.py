@@ -6,7 +6,7 @@ import click
 from flask import Flask
 from flask.logging import default_handler
 
-from flask_template.extensions import db, migrate, redis
+from flask_template.extensions import db, migrate, redis, celery
 from flask_template.configs import basedir, config
 
 
@@ -56,6 +56,7 @@ def register_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db=db)
     redis.init_app(app)
+    celery.init_app(app)
 
 
 def register_commands(app):
