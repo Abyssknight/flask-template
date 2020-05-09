@@ -23,6 +23,9 @@ class BaseConfig:
     CELERY_LOG_DIR = 'logs'
     CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
     CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+    CELERY_START_LOCAL_WORKERS = False
+    CELERY_FLOWER = False
+    CELERY_SCHEDULER = False
 
 
 class TestingConfig(BaseConfig):

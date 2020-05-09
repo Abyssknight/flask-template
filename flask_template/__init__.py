@@ -6,8 +6,9 @@ import click
 from flask import Flask
 from flask.logging import default_handler
 
-from flask_template.extensions import db, migrate, redis, celery
+from flask_template import tasks
 from flask_template.configs import basedir, config
+from flask_template.extensions import celery, db, migrate, redis
 
 
 def create_app(config_name=None):
@@ -82,4 +83,4 @@ def register_shell_context(app):
 
     @app.shell_context_processor
     def make_shell_context():
-        return dict(db=db)
+        return dict(db=db, celery=celery, tasks=tasks)
