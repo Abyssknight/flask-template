@@ -19,6 +19,11 @@ class BaseConfig:
     # Redis
     REDIS_URL = "redis://localhost:6379/0"
 
+    # Celery
+    CELERY_LOG_DIR = 'logs'
+    CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
 
 class TestingConfig(BaseConfig):
     """测试环境"""
