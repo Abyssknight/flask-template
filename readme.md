@@ -8,7 +8,10 @@
 * Flask-Migrate
 * Flask-Redis
 * Flask-Execute
+  * Celery 任务
 * Flask-Testing
+* Schedule
+  * 定时任务
 
 ## 命令
 
