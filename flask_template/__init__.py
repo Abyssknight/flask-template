@@ -1,13 +1,15 @@
 import logging
 import os
+import time
 from logging.handlers import RotatingFileHandler
 
 import click
+import schedule
 from flask import Flask
 from flask.logging import default_handler
 
-from flask_template.extensions import db, migrate, redis, celery
 from flask_template.configs import basedir, config
+from flask_template.extensions import celery, db, migrate, redis
 
 
 def create_app(config_name=None):
@@ -75,6 +77,14 @@ def register_commands(app):
 
         db.create_all()
         click.echo('Initialized database.')
+
+    @app.cli.command()
+    def cron():
+        """启动定时任务"""
+        from flask_template import schedules
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
 
 
 def register_shell_context(app):
