@@ -6,11 +6,11 @@ from logging.handlers import RotatingFileHandler
 import click
 import schedule
 from flask import Flask
-from flask.logging import default_handler
 
 from flask_template import tasks
 from flask_template.configs import basedir, config
 from flask_template.extensions import celery, db, migrate, redis
+from flask_template.utils import get_host_ip, get_host_name
 
 
 def create_app(config_name=None):
@@ -33,17 +33,24 @@ def create_app(config_name=None):
 
 def register_logger(app):
     """注册日志"""
-    app.logger.removeHandler(default_handler)
 
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    class ContextFilter(logging.Filter):
+        """增强日志信息"""
+
+        def filter(self, record):
+            record.hostname = get_host_name()
+            return True
+
+    formatter = logging.Formatter(
+        '(%(hostname)s)[%(asctime)s][%(filename)s:%(lineno)d][%(levelname)s][%(thread)d] - %(message)s')
     file_handler = RotatingFileHandler(os.path.join(basedir, 'logs/flask_template.log'),
                                        maxBytes=10 * 1024 * 1024,
                                        backupCount=10)
+    file_handler.addFilter(ContextFilter())
     file_handler.setFormatter(formatter)
     file_handler.setLevel(logging.INFO)
 
-    if not app.debug:
-        app.logger.addHandler(file_handler)
+    app.logger.addHandler(file_handler)
 
 
 def register_blueprints(app):
@@ -60,7 +67,6 @@ def register_extensions(app):
     migrate.init_app(app, db=db)
     redis.init_app(app)
     celery.init_app(app)
-    # api.init_app(app)
 
 
 def register_commands(app):
