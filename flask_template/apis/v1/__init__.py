@@ -7,7 +7,7 @@ api = Api(app=api_v1, version='1.0', doc='/doc', title='flask-template', descrip
 
 @api_v1.route('/ping')
 def ping():
-    current_app.logger.info("ping!")
+    current_app.logger.info('ping!')
     return jsonify({'msg': 'pong!'})
 
 
