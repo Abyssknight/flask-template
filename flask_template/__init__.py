@@ -49,7 +49,7 @@ def register_logger(app):
 def register_blueprints(app):
     """注册蓝图"""
 
-    from flask_template.apis.v1 import api_v1
+    from flask_template.apis import api_v1
     app.register_blueprint(api_v1)
 
 
@@ -60,6 +60,7 @@ def register_extensions(app):
     migrate.init_app(app, db=db)
     redis.init_app(app)
     celery.init_app(app)
+    # api.init_app(app)
 
 
 def register_commands(app):
