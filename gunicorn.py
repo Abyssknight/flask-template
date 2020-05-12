@@ -1,6 +1,6 @@
 import os
 
-import socket
+from flask_template.utils import get_host_ip
 
 base_dir = os.path.dirname(__file__)
 
@@ -21,5 +21,5 @@ workers = os.cpu_count() * 2 + 1
 threads = os.cpu_count() * 2 + 1
 
 # 绑定本地地址
-ip = socket.gethostbyname(socket.gethostname())
+ip = get_host_ip()
 bind = "{}:5000".format(ip)
