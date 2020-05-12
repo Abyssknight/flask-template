@@ -6,6 +6,7 @@ from logging.handlers import RotatingFileHandler
 import click
 import schedule
 from flask import Flask
+from flask.logging import default_handler
 
 from flask_template import tasks
 from flask_template.configs import basedir, config
@@ -33,20 +34,21 @@ def create_app(config_name=None):
 
 def register_logger(app):
     """注册日志"""
+    app.logger.setLevel(logging.INFO)
 
-    class ContextFilter(logging.Filter):
-        """增强日志信息"""
-
-        def filter(self, record):
+    class RequestFormatter(logging.Formatter):
+        def format(self, record):
             record.hostname = get_host_name()
-            return True
+            return super().format(record)
 
-    formatter = logging.Formatter(
-        '(%(hostname)s)[%(asctime)s][%(filename)s:%(lineno)d][%(levelname)s][%(thread)d] - %(message)s')
-    file_handler = RotatingFileHandler(os.path.join(basedir, 'logs/flask_template.log'),
-                                       maxBytes=10 * 1024 * 1024,
-                                       backupCount=10)
-    file_handler.addFilter(ContextFilter())
+    file_handler = RotatingFileHandler(
+        filename=os.path.join(basedir, 'logs/flask_template.log'),
+        maxBytes=10 * 1024 * 1024,
+        backupCount=10
+    )
+    formatter = RequestFormatter(
+        '(%(hostname)s)[%(asctime)s][%(filename)s:%(lineno)d][%(levelname)s][%(thread)d] - %(message)s'
+    )
     file_handler.setFormatter(formatter)
     file_handler.setLevel(logging.INFO)
 
