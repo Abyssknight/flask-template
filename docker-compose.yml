@@ -5,14 +5,15 @@ services:
     build: .
     ports:
       - '5000:5000'
-    expose:
-      - '5000'
+    restart: always
     command: gunicorn -c gunicorn.py wsgi:app
   cron:
     build: .
+    restart: always
     command: flask cron
   celery:
     build: .
+    restart: always
     environment:
       - C_FORCE_ROOT=1
     command: flask celery worker
