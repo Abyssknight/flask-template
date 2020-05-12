@@ -6,7 +6,6 @@ from logging.handlers import RotatingFileHandler
 import click
 import schedule
 from flask import Flask
-from flask.logging import default_handler
 
 from flask_template import tasks
 from flask_template.configs import basedir, config
@@ -18,7 +17,7 @@ def create_app(config_name=None):
     """工厂函数"""
 
     if config_name is None:
-        config_name = os.getenv('FLASK_CONFIG', 'development')
+        config_name = os.getenv('FLASK_ENV', 'development')
 
     app = Flask(__name__)
     app.config.from_object(config[config_name])
