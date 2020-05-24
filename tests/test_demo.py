@@ -1,8 +1,11 @@
+import time
+
 from flask_testing import TestCase
 
 from flask_template import create_app
-from flask_template.models import MyDB
 from flask_template.extensions import db
+from flask_template.models import MyDB
+from flask_template.utils import RedisLock
 
 
 class BaseTest(TestCase):
@@ -30,3 +33,23 @@ class InitStateTest(BaseTest):
         db_obj = MyDB.query.get(1)
         self.assertTrue(getattr(db_obj, 'create_at'))
         self.assertTrue(getattr(db_obj, 'update_at'))
+
+
+class RedisLockTest(BaseTest):
+    lock1 = RedisLock(lock_name='lock:name', timeout=3)
+    lock2 = RedisLock(lock_name='lock:name', timeout=3)
+
+    def test_redis_lock_acquire(self):
+        self.assertTrue(self.lock1.acquire())
+        self.assertFalse(self.lock2.acquire())
+
+        self.assertTrue(self.lock1.release())
+        self.assertTrue(self.lock2.acquire())
+        self.assertTrue(self.lock2.release())
+
+    def test_redis_lock_release(self):
+        self.assertTrue(self.lock1.acquire())
+        time.sleep(15)
+        self.assertTrue(self.lock2.acquire())
+        self.assertFalse(self.lock1.release())
+        self.assertTrue(self.lock2.release())
