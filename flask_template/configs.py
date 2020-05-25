@@ -10,6 +10,7 @@ basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 class BaseConfig:
     """基础配置"""
 
+    # 需要更换
     SECRET_KEY = '5dbefe8430d17d34cd36121517eab54728b01ebddff60807ae30d2194b743cad'
 
     # SQLAlchemy
@@ -23,6 +24,8 @@ class TestingConfig(BaseConfig):
 
     # SQLAlchemy
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'data-test.db'))
+    # Redis
+    REDIS_URL = "redis://localhost:6379/0"
 
 
 class DevelopmentConfig(BaseConfig):
@@ -34,12 +37,12 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'data.db'))
 
     # Redis
-    REDIS_URL = "redis://192.168.1.14:6379/0"
+    REDIS_URL = "redis://localhost:6379/0"
 
     # Celery
     CELERY_LOG_DIR = 'logs'
-    CELERY_BROKER_URL = 'pyamqp://guest@192.168.1.14//'
-    CELERY_RESULT_BACKEND = 'redis://192.168.1.14:6379/1'
+    CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
     CELERY_START_LOCAL_WORKERS = False
     CELERY_FLOWER = False
     CELERY_SCHEDULER = False
