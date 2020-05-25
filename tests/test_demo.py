@@ -42,7 +42,6 @@ class RedisLockTest(BaseTest):
     def test_redis_lock_acquire(self):
         self.assertTrue(self.lock1.acquire())
         self.assertFalse(self.lock2.acquire())
-
         self.assertTrue(self.lock1.release())
         self.assertTrue(self.lock2.acquire())
         self.assertTrue(self.lock2.release())
