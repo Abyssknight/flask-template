@@ -6,6 +6,7 @@ from logging.handlers import RotatingFileHandler
 import click
 import schedule
 from flask import Flask
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from flask_template import tasks
 from flask_template.configs import basedir, config
@@ -27,6 +28,7 @@ def create_app(config_name=None):
     register_extensions(app)
     register_commands(app)
     register_shell_context(app)
+    register_middlewares(app)
 
     return app
 
@@ -102,3 +104,8 @@ def register_shell_context(app):
     @app.shell_context_processor
     def make_shell_context():
         return dict(db=db, celery=celery, tasks=tasks)
+
+
+def register_middlewares(app):
+    """注册中间件"""
+    app.wsgi_app = ProxyFix(app.wsgi_app)
