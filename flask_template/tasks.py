@@ -1,5 +1,5 @@
 """
-Celery 任务
+Celery Task
 """
 
 
