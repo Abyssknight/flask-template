@@ -5,12 +5,17 @@ services:
     build: .
     ports:
       - '5000:5000'
-    command: gunicorn -c gunicorn.py wsgi:app
+    command: pipenv run prd
   cron:
     build: .
-    command: flask cron
+    environment:
+      - FLASK_APP=flask_template
+      - FLASK_ENV=production
+    command: pipenv run cron
   celery:
     build: .
     environment:
       - C_FORCE_ROOT=1
-    command: flask celery worker
+      - FLASK_APP=flask_template
+      - FLASK_ENV=production
+    command: pipenv run celery

@@ -18,6 +18,8 @@ arrow = "*"
 celery = "*"
 schedule = "*"
 python-dotenv = "*"
+gunicorn = "*"
+gevent = "*"
 
 [requires]
 python_version = "3"
