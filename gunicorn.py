@@ -9,7 +9,7 @@ if not os.path.exists('logs'):
     os.mkdir('logs')
 
 # 日志
-loglevel = 'info'
+loglevel = 'debug'
 log_dir = os.path.join(base_dir, 'logs')
 errorlog = os.path.join(log_dir, 'error.log')
 accesslog = os.path.join(log_dir, 'access.log')

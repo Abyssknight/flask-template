@@ -47,7 +47,7 @@ def register_logger(app):
             return super().format(record)
 
     formatter = RequestFormatter(
-        '[%(levelname)s][%(hostname)s][%(threadName)s] at [%(asctime)s] in [%(module)s:%(funcName)s:%(lineno)d] - %(message)s'
+        '[%(asctime)s] [%(levelname)s] [%(hostname)s] [%(threadName)s] at [%(module)s:%(funcName)s:%(lineno)d] - %(message)s'
     )
 
     log_dir = app.config.get('LOG_DIR', os.path.join(basedir, 'logs'))
