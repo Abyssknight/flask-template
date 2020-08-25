@@ -27,6 +27,9 @@ class TestingConfig(BaseConfig):
     # Redis
     REDIS_URL = "redis://localhost:6379/0"
 
+    # Log
+    LOG_DIR = os.path.join(basedir, 'logs')
+
 
 class DevelopmentConfig(BaseConfig):
     """开发环境"""

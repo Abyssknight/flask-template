@@ -29,6 +29,7 @@ def create_app(config_name=None):
     register_commands(app)
     register_shell_context(app)
     register_middlewares(app)
+    register_ping(app)
 
     return app
 
@@ -42,8 +43,9 @@ def register_logger(app):
             record.hostname = get_host_name()
             return super().format(record)
 
+    log_dir = app.config.get('LOG_DIR', os.path.join(basedir, 'logs'))
     file_handler = RotatingFileHandler(
-        filename=os.path.join(basedir, 'logs/flask_template.log'),
+        filename=os.path.join(log_dir, f'{app.name}.log'),
         maxBytes=10 * 1024 * 1024,
         backupCount=10
     )
@@ -109,3 +111,12 @@ def register_shell_context(app):
 def register_middlewares(app):
     """注册中间件"""
     app.wsgi_app = ProxyFix(app.wsgi_app)
+
+
+def register_ping(app):
+    """ping"""
+
+    @app.route('/')
+    def ping():
+        app.logger.info('ping')
+        return 'pong!'
