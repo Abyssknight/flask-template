@@ -35,6 +35,7 @@ class DevelopmentConfig(BaseConfig):
 
     # SQLAlchemy
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'data.db'))
+    SQLALCHEMY_ECHO = True
 
     # Redis
     REDIS_URL = "redis://localhost:6379/0"
