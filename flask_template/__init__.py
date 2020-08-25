@@ -40,7 +40,7 @@ def register_logger(app):
 
     class RequestFormatter(logging.Formatter):
         def format(self, record):
-            record.hostname = get_host_name()
+            record.hostname = get_host_ip()
             return super().format(record)
 
     log_dir = app.config.get('LOG_DIR', os.path.join(basedir, 'logs'))
@@ -50,7 +50,7 @@ def register_logger(app):
         backupCount=10
     )
     formatter = RequestFormatter(
-        '(%(hostname)s)[%(asctime)s][%(filename)s:%(lineno)d][%(levelname)s][%(thread)d] - %(message)s'
+        '[%(levelname)s][%(hostname)s][%(threadName)s][%(asctime)s][%(module)s:%(funcName)s:%(lineno)d]- %(message)s'
     )
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(formatter)
