@@ -1,11 +1,11 @@
 """
 使用 Namespace 实现 REST API 资源隔离
 
-apis = api.namespace('apis', description='api resource')
+resources = api.namespace('resources', description='api resource')
 
 
-@apis.route('/')
-class Apis(Resource):
+@resources.route('/')
+class Resources(Resource):
     def get(self):
         return {'hello': 'world'}
 
