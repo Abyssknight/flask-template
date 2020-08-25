@@ -35,7 +35,7 @@ def create_app(config_name=None):
 
 def register_logger(app):
     """注册日志"""
-    app.logger.setLevel(logging.INFO)
+    app.logger.setLevel(logging.DEBUG)
 
     class RequestFormatter(logging.Formatter):
         def format(self, record):
@@ -50,8 +50,8 @@ def register_logger(app):
     formatter = RequestFormatter(
         '(%(hostname)s)[%(asctime)s][%(filename)s:%(lineno)d][%(levelname)s][%(thread)d] - %(message)s'
     )
-    file_handler.setFormatter(formatter)
     file_handler.setLevel(logging.INFO)
+    file_handler.setFormatter(formatter)
 
     app.logger.addHandler(file_handler)
 
