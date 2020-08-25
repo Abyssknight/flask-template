@@ -1,11 +1,13 @@
 import logging
 import os
 import time
+from logging import StreamHandler
 from logging.handlers import RotatingFileHandler
 
 import click
 import schedule
 from flask import Flask
+from flask.logging import default_handler
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from flask_template import tasks
@@ -37,11 +39,16 @@ def create_app(config_name=None):
 def register_logger(app):
     """注册日志"""
     app.logger.setLevel(logging.DEBUG)
+    app.logger.removeHandler(default_handler)
 
     class RequestFormatter(logging.Formatter):
         def format(self, record):
             record.hostname = get_host_ip()
             return super().format(record)
+
+    formatter = RequestFormatter(
+        '[%(levelname)s][%(hostname)s][%(threadName)s] at [%(asctime)s] in [%(module)s:%(funcName)s:%(lineno)d] - %(message)s'
+    )
 
     log_dir = app.config.get('LOG_DIR', os.path.join(basedir, 'logs'))
     file_handler = RotatingFileHandler(
@@ -49,13 +56,13 @@ def register_logger(app):
         maxBytes=10 * 1024 * 1024,
         backupCount=10
     )
-    formatter = RequestFormatter(
-        '[%(levelname)s][%(hostname)s][%(threadName)s][%(asctime)s][%(module)s:%(funcName)s:%(lineno)d]- %(message)s'
-    )
-    file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(formatter)
 
+    stream_handler = StreamHandler()
+    stream_handler.setFormatter(formatter)
+
     app.logger.addHandler(file_handler)
+    app.logger.addHandler(stream_handler)
 
 
 def register_blueprints(app):
