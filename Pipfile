@@ -20,6 +20,7 @@ schedule = "*"
 python-dotenv = "*"
 gunicorn = "*"
 gevent = "*"
+pymysql = "*"
 
 [requires]
 python_version = "3"
