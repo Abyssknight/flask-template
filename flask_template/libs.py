@@ -14,7 +14,7 @@ class AutoMap:
         self.app = app
         self.db = db
         self.Base = None
-        self.metadata = db.metadata if db else None
+        self.metadata = None
 
         self.reflected = False
 
@@ -39,7 +39,7 @@ class AutoMap:
         self.Base.prepare()
         self.reflected = True
 
-    def get_model(self, table_name, **kwargs):
+    def get_model(self, table_name):
         if self.reflected is False:
             self._reflect()
 
