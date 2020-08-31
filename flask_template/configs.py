@@ -51,6 +51,9 @@ class DevelopmentConfig(BaseConfig):
     CELERY_FLOWER = False
     CELERY_SCHEDULER = False
 
+    # AutoMap Tables
+    AUTOMAP_TABLES = ['rpt_client_product_click']
+
 
 class ProductionConfig(BaseConfig):
     """生产环境"""
