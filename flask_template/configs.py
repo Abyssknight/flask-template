@@ -52,7 +52,7 @@ class DevelopmentConfig(BaseConfig):
     CELERY_SCHEDULER = False
 
     # AutoMap Tables
-    AUTOMAP_TABLES = ['rpt_client_product_click']
+    AUTOMAP_TABLES = []
 
 
 class ProductionConfig(BaseConfig):
