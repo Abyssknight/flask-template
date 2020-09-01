@@ -43,4 +43,4 @@ class AutoMap:
         if self.reflected is False:
             self._reflect()
 
-        return getattr(self.Base.classes, table_name)
+        return getattr(self.Base.classes, table_name, None)
