@@ -4,7 +4,7 @@
 
 import os
 
-basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
 class BaseConfig:
@@ -22,13 +22,13 @@ class TestingConfig(BaseConfig):
     TESTING = True
 
     # SQLAlchemy
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'data-test.db'))
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'data-test.db'))
 
     # Redis
     REDIS_URL = "redis://localhost:6379/0"
 
     # Log
-    LOG_DIR = os.path.join(basedir, 'logs')
+    LOG_DIR = os.path.join(BASE_DIR, 'logs')
 
 
 class DevelopmentConfig(BaseConfig):
@@ -37,7 +37,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
     # SQLAlchemy
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'data.db'))
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'data.db'))
     SQLALCHEMY_ECHO = True
 
     # Redis
