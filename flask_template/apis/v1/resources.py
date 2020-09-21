@@ -4,7 +4,7 @@
 
 from flask_restx import Resource
 
-from . import api_v1_resource
+from flask_template.apis.v1 import api_v1_resource
 
 # Resource here
 resources = api_v1_resource.namespace('resources', description='')

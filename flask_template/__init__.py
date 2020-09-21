@@ -11,7 +11,7 @@ from flask.logging import default_handler
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from flask_template import tasks
-from flask_template.configs import basedir, config
+from flask_template.configs import BASE_DIR, config
 from flask_template.extensions import automap, celery, db, migrate, redis
 from flask_template.utils import get_host_ip, get_host_name
 
@@ -50,7 +50,7 @@ def register_logger(app):
         '[%(asctime)s] [%(levelname)s] [%(hostname)s] [%(threadName)s] at [%(module)s:%(funcName)s:%(lineno)d] - %(message)s'
     )
 
-    log_dir = app.config.get('LOG_DIR', os.path.join(basedir, 'logs'))
+    log_dir = app.config.get('LOG_DIR', os.path.join(BASE_DIR, 'logs'))
     file_handler = RotatingFileHandler(
         filename=os.path.join(log_dir, f'{app.name}.log'),
         maxBytes=10 * 1024 * 1024,

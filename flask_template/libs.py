@@ -13,7 +13,7 @@ class AutoMap:
     def __init__(self, app=None, db=None):
         self.app = app
         self.db = db
-        self.Base = None
+        self.base = None
         self.metadata = None
 
         self.reflected = False
@@ -25,7 +25,7 @@ class AutoMap:
         self.app = app or self.app
         self.db = db or self.db
         self.metadata = db.metadata
-        self.Base = automap_base(metadata=self.metadata)
+        self.base = automap_base(metadata=self.metadata)
 
     def _reflect(self):
         engine = self.db.engine
@@ -36,11 +36,11 @@ class AutoMap:
             only=lambda t, i: any([t.startswith(table) for table in automap_tables]) if automap_tables else None
         )
 
-        self.Base.prepare()
+        self.base.prepare()
         self.reflected = True
 
     def get_model(self, table_name):
         if self.reflected is False:
             self._reflect()
 
-        return getattr(self.Base.classes, table_name, None)
+        return getattr(self.base.classes, table_name, None)

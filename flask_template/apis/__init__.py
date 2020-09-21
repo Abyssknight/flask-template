@@ -2,4 +2,4 @@
 所有 API 蓝图
 """
 
-from .v1 import api_v1
+from flask_template.apis.v1 import api_v1
