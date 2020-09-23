@@ -12,7 +12,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from flask_template import tasks
 from flask_template.configs import BASE_DIR, config
-from flask_template.extensions import automap, celery, db, migrate, redis
+from flask_template.extensions import celery, db, migrate, redis
 from flask_template.utils import get_host_ip, get_host_name
 
 
@@ -77,7 +77,6 @@ def register_extensions(app):
 
     db.init_app(app)
     migrate.init_app(app, db=db)
-    automap.init_app(app, db=db)
     redis.init_app(app)
     celery.init_app(app)
 
@@ -113,7 +112,7 @@ def register_shell_context(app):
 
     @app.shell_context_processor
     def make_shell_context():
-        return dict(db=db, celery=celery, tasks=tasks, automap=automap)
+        return dict(db=db, celery=celery, tasks=tasks)
 
 
 def register_middlewares(app):

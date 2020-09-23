@@ -22,7 +22,7 @@ class TestingConfig(BaseConfig):
     TESTING = True
 
     # SQLAlchemy
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'data-test.db'))
+    SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'data-test.db'))
 
     # Redis
     REDIS_URL = "redis://localhost:6379/0"
@@ -37,7 +37,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
     # SQLAlchemy
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'data.db'))
+    SQLALCHEMY_DATABASE_URI = os.getenv('DEV_DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'data.db'))
     SQLALCHEMY_ECHO = True
 
     # Redis
