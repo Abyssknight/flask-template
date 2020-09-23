@@ -41,8 +41,7 @@ class RedisLock:
             if redis.ttl(self.lock_name) == -1:
                 redis.expire(self.lock_name, self.ex)
             time.sleep(0.01)
-        else:
-            return False
+        return False
 
     def release(self):
         """
