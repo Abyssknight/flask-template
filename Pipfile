@@ -29,6 +29,6 @@ python_version = "3"
 [scripts]
 dev = "flask run"
 prd = "gunicorn -c gunicorn.py wsgi:app"
-test = "nose2"
+test = "nose2 -v --pretty-assert"
 cron = "flask cron"
 celery = "flask celery worker"
