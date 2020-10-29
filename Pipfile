@@ -7,6 +7,7 @@ verify_ssl = true
 flask-shell-ipython = "*"
 flask-testing = "*"
 nose2 = "*"
+faker = "*"
 
 [packages]
 flask = "*"
@@ -28,7 +29,7 @@ python_version = "3"
 
 [scripts]
 dev = "flask run"
-prd = "gunicorn -c gunicorn.py wsgi:app"
+pro = "gunicorn -c gunicorn.py wsgi:app"
 test = "nose2 -v --pretty-assert"
 cron = "flask cron"
 celery = "flask celery worker"
