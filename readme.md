@@ -17,7 +17,7 @@
  
 ## 包管理
 
-包管理使用了 [pipenv](https://pipenv.pypa.io/en/latest/), 配合 `scripts` 非常好用
+包管理使用了 [pipenv](https://pipenv.pypa.io/en/latest/) , 配合 `scripts` 非常好用
 
 ## 使用方式
 
