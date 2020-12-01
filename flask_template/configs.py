@@ -12,32 +12,12 @@ class BaseConfig:
 
     SECRET_KEY = os.getenv('SECRET_KEY')
 
-    # SQLAlchemy
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-
     # Log
     LOG_DIR = os.path.join(BASE_DIR, 'logs')
 
-
-class TestingConfig(BaseConfig):
-    """测试环境"""
-
-    TESTING = True
-
-    # SQLAlchemy
-    SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'data-test.db'))
-
-    # Redis
-    REDIS_URL = os.getenv('TEST_REDIS_URL', 'redis://localhost:6379/0')
-
-
-class DevelopmentConfig(BaseConfig):
-    """开发环境"""
-
-    DEBUG = True
-
     # SQLAlchemy
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'data.db'))
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = True
 
     # Redis
@@ -55,7 +35,24 @@ class DevelopmentConfig(BaseConfig):
     AUTOMAP_TABLES = []
 
 
-class ProductionConfig(BaseConfig):
+class TestingConfig(BaseConfig):
+    """测试环境"""
+
+    TESTING = True
+
+    SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'data-test.db'))
+    SQLALCHEMY_ECHO = False
+
+    REDIS_URL = os.getenv('TEST_REDIS_URL', 'redis://localhost:6379/0')
+
+
+class DevelopmentConfig(BaseConfig):
+    """开发环境"""
+
+    DEBUG = True
+
+
+class ProductionConfig(DevelopmentConfig):
     """生产环境"""
 
     DEBUG = False
