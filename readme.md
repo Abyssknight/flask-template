@@ -48,3 +48,7 @@
 * `flask shell` 进入 `shell` 上下文
 * `flask routes` 查看所有路由
 * `flask initdb` 初始化数据库表，如果没有则创建
+
+## 容器启动
+
+项目中的 `Dockerfile` 基于 `python:3.8-alpine` 采用 `两阶段构建`, 最终生成的镜像很小, 拉取时更快; `docker-compose` 用于简单编排
