@@ -25,11 +25,11 @@ gevent = "*"
 pymysql = "*"
 
 [requires]
-python_version = "3"
+python_version = "3.7"
 
 [scripts]
 dev = "flask run"
-pro = "gunicorn -c gunicorn.py wsgi:app"
+prd = "gunicorn -c gunicorn.conf.py wsgi:app"
 test = "nose2 -v --pretty-assert"
 cron = "flask cron"
 celery = "flask celery worker"

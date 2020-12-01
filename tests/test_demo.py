@@ -3,7 +3,7 @@ import time
 from flask_testing import TestCase
 
 from flask_template import create_app
-from flask_template.extensions import db
+from flask_template.models import *
 from flask_template.utils import RedisLock
 
 

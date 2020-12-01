@@ -18,7 +18,6 @@ access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"
 # 工作进程
 worker_class = 'gevent'
 workers = os.cpu_count() * 2 + 1
-threads = os.cpu_count() * 2 + 1
 
 # 绑定本地地址
 ip = get_host_ip()
