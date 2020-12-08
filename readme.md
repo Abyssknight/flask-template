@@ -39,6 +39,7 @@
 * `pipenv run test` 启动单元测试
 * `pipenv run cron` 启动定时任务
 * `pipenv run celery` 启动 `celery` 进程
+* `pipenv run flake8` 使用 `flake8`进行代码规范检查
 
 以上命令相当于 `Alias`, 本质上还是使用 `Flask` 基于 `Click` 实现的命令行功能
 

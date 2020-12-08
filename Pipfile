@@ -8,6 +8,7 @@ flask-shell-ipython = "*"
 flask-testing = "*"
 nose2 = "*"
 faker = "*"
+flake8 = "*"
 
 [packages]
 flask = "*"
@@ -33,3 +34,4 @@ prd = "gunicorn -c gunicorn.conf.py wsgi:app"
 test = "nose2 -v --pretty-assert"
 cron = "flask cron"
 celery = "flask celery worker"
+flake8 = "flake8 flask_template"
