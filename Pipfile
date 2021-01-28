@@ -35,3 +35,4 @@ test = "nose2 -v --pretty-assert"
 cron = "flask cron"
 celery = "flask celery worker"
 flake8 = "flake8 flask_template"
+shell = 'flask shell'
